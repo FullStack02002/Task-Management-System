@@ -1,11 +1,12 @@
 import React from "react";
 import { createTask } from "../store/Slices/taskSlice.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 const CreateTaskForm = () => {
   const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.task); 
   const {
     register,
     handleSubmit,
@@ -93,7 +94,27 @@ const CreateTaskForm = () => {
           type="submit"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer"
         >
-          Create Task
+          {loading ? (
+            <div className="flex justify-center items-center">
+              <svg
+                className="w-5 h-5 animate-spin"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M12 3v9m0 0v9m0-9h9m-9 0H3"
+                />
+              </svg>
+              <span className="ml-2">Creating Task...</span>
+            </div>
+          ) : (
+            "Create Task"
+          )}
         </button>
       </form>
     </div>

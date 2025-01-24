@@ -6,7 +6,7 @@ import { getUserTask, makeTasksEmpty } from '../store/Slices/taskSlice';
 const View = () => {
   const { userId } = useParams();
   const dispatch = useDispatch();
-  const tasks = useSelector((state) => state.task?.tasks);
+  const { tasks, loading, error } = useSelector((state) => state.task);
 
   useEffect(() => {
     dispatch(getUserTask({ userId }));
@@ -34,7 +34,33 @@ const View = () => {
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">User Tasks</h2>
-      {tasks && tasks.length > 0 ? (
+      {loading ? (
+        <div className="flex justify-center items-center">
+          <svg
+            className="animate-spin h-10 w-10 text-gray-500"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            ></circle>
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8v8H4z"
+            ></path>
+          </svg>
+          <span className="ml-2 text-gray-500">Loading tasks...</span>
+        </div>
+      ) : error ? (
+        <div className="text-center text-red-500">Error loading tasks: {error.message}</div>
+      ) : tasks && tasks.length > 0 ? (
         <ul className="space-y-4">
           {tasks.map((task) => (
             <li

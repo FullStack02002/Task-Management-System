@@ -104,15 +104,15 @@ export const getCurrentUser = createAsyncThunk("getCurrentUser", async () => {
         state.loading = false;
       });
       builder.addCase(getCurrentUser.pending, (state) => {
-        state.loading = true;
+        // state.loading = true;
       });
       builder.addCase(getCurrentUser.fulfilled, (state, action) => {
-        state.loading = false;
+        // state.loading = false;
         state.userData = action.payload;
         state.status = true;
       });
       builder.addCase(getCurrentUser.rejected, (state) => {
-        state.loading = false;
+        // state.loading = false;
         state.userData = null;
         state.status = false;
       });

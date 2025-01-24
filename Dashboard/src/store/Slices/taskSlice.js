@@ -33,6 +33,7 @@ const taskSlice = createSlice({
     });
     builder.addCase(getUserTask.fulfilled, (state, action) => {
       state.tasks = action.payload;
+      state.loading=false;
     });
     builder.addCase(getUserTask.rejected, (state, action) => {
       state.loading = false;

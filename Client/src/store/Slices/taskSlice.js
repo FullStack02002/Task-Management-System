@@ -168,15 +168,15 @@ const taskSlice = createSlice({
       })
 
       // Delete Task
-      .addCase(deleteTask.pending, (state) => {
-        state.loading = true;
-      })
+      // .addCase(deleteTask.pending, (state) => {
+      //   state.loading = true;
+      // })
       .addCase(deleteTask.fulfilled, (state, action) => {
         state.tasks = state.tasks.filter((task) => task._id !== action.payload);
       })
-      .addCase(deleteTask.rejected, (state) => {
-        state.loading = false;
-      })
+      // .addCase(deleteTask.rejected, (state) => {
+      //   state.loading = false;
+      // })
 
       // Filter Task
       .addCase(filterTask.pending, (state) => {
@@ -192,10 +192,10 @@ const taskSlice = createSlice({
 
       // Update Status
       .addCase(updateStatus.pending, (state) => {
-        state.loading = true;
+        // state.loading = true;
       })
       .addCase(updateStatus.fulfilled, (state, action) => {
-        state.loading = false;
+        // state.loading = false;
         const index = state.tasks.findIndex(
           (task) => task._id === action.payload._id
         );
@@ -204,7 +204,7 @@ const taskSlice = createSlice({
         }
       })
       .addCase(updateStatus.rejected, (state) => {
-        state.loading = false;
+        // state.loading = false;
       });
   },
 });

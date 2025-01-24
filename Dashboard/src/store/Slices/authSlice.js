@@ -74,11 +74,11 @@ const authSlice=createSlice({
             state.loading=true;
         });
         builder.addCase(adminLogin.fulfilled,(state,action)=>{
+            state.loading=false;
             const  {role}=action.payload;
             if(role==="admin"){
                 state.admin=true;
             }
-            state.loading=false;
             state.adminData=action.payload;
             state.status=true;
         });
@@ -88,15 +88,15 @@ const authSlice=createSlice({
             state.status=false;
         });
         builder.addCase(getCurrentUser.pending,(state,action)=>{
-            state.loading=true;
+            // state.loading=true;
         });
         builder.addCase(getCurrentUser.fulfilled,(state,action)=>{
-            state.loading=false;
+            // state.loading=false;
             state.adminData=action.payload;
             state.status=true;
         });
         builder.addCase(getCurrentUser.rejected,(state)=>{
-            state.loading=false;
+            // state.loading=false;
             state.adminData=null;
             state.status=false;
         });
@@ -110,17 +110,17 @@ const authSlice=createSlice({
         builder.addCase(getAllUsers.rejected,(state)=>{
             state.loading=false;
         });
-        builder.addCase(adminLogout.pending,(state)=>{
-            state.loading=true;
-        })
+        // builder.addCase(adminLogout.pending,(state)=>{
+        //     state.loading=true;
+        // })
         builder.addCase(adminLogout.fulfilled,(state)=>{
             state.loading=false;
             state.adminData=null;
             state.status=false;
         })
-        builder.addCase(adminLogout.rejected,(state)=>{
-            state.loading=false;
-        })
+        // builder.addCase(adminLogout.rejected,(state)=>{
+        //     state.loading=false;
+        // })
         
 
     }

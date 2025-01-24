@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { deleteTask, updateTask, updateStatus } from '../store/Slices/taskSlice';
 
 const TaskList = ({ tasks }) => {
   const dispatch = useDispatch();
-  const [isEditing, setIsEditing] = useState(null); 
+  const loading = useSelector((state) => state.task.loading);
+  const [isEditing, setIsEditing] = useState(null);
   const { register, handleSubmit, setValue } = useForm();
 
   const handleStatusChange = (taskId, status) => {
@@ -20,11 +21,12 @@ const TaskList = ({ tasks }) => {
     setIsEditing(task._id);
     setValue('title', task.title);
     setValue('description', task.description);
-    setValue('dueDate', new Date(task.dueDate).toISOString().split('T')[0]);  };
+    setValue('dueDate', new Date(task.dueDate).toISOString().split('T')[0]);
+  };
 
   const onSubmit = (data, taskId) => {
     dispatch(updateTask({ id: taskId, data }));
-    setIsEditing(null); 
+    setIsEditing(null);
   };
 
   const getDueDateColor = (dueDate) => {
@@ -45,7 +47,30 @@ const TaskList = ({ tasks }) => {
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">User Tasks</h2>
-      {tasks.length > 0 ? (
+      {loading ? (
+        <div className="flex justify-center items-center">
+          <svg
+            className="animate-spin h-12 w-12 text-blue-500"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            ></circle>
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8v8H4z"
+            ></path>
+          </svg>
+        </div>
+      ) : tasks.length > 0 ? (
         <div className="flex flex-col">
           <ul className="space-y-4">
             {tasks.map((task) => (

@@ -5,6 +5,7 @@ import { userLogout } from "../store/Slices/authSlice";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

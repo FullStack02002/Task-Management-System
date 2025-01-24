@@ -2,13 +2,13 @@ import React from "react";
 import { Input } from "../components";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../store/Slices/authSlice";
-
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const loading = useSelector((state) => state.auth.loading);
   const {
     register,
     handleSubmit,
@@ -16,13 +16,11 @@ const Login = () => {
   } = useForm();
 
   const submit = async (data) => {
-    const response=await dispatch(userLogin(data));
-    if(response?.type==="login/fulfilled"){
-      navigate("/")
-    }
-    else{
-      
-      navigate("/login")
+    const response = await dispatch(userLogin(data));
+    if (response?.type === "login/fulfilled") {
+      navigate("/");
+    } else {
+      navigate("/login");
     }
   };
 
@@ -81,9 +79,40 @@ const Login = () => {
       {/* Login Button */}
       <button
         type="submit"
-        className="w-full px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white font-semibold text-lg rounded-md shadow-md transition-all duration-200"
+        disabled={loading}
+        className={`w-full px-4 py-2 text-white font-semibold text-lg rounded-md shadow-md transition-all duration-200 ${
+          loading
+            ? "bg-gray-400 cursor-not-allowed"
+            : "bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600"
+        }`}
       >
-        Login
+        {loading ? (
+          <div className="flex items-center justify-center space-x-2">
+            <svg
+              className="animate-spin h-5 w-5 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v8H4z"
+              ></path>
+            </svg>
+            <span>Signing in...</span>
+          </div>
+        ) : (
+          "Login"
+        )}
       </button>
     </form>
   );

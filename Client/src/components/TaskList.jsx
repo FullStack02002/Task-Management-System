@@ -76,11 +76,11 @@ const TaskList = ({ tasks }) => {
             {tasks.map((task) => (
               <li
                 key={task._id}
-                className={`bg-white p-4 rounded-lg shadow-md flex justify-between items-center`}
+                className={`bg-white p-4 rounded-lg shadow-md flex flex-col justify-between`}
                 style={{ borderLeft: `5px solid ${getDueDateColor(task.dueDate)}` }}
               >
                 {/* Task Content */}
-                <div className="flex flex-col">
+                <div className="flex flex-col mb-4">
                   {isEditing === task._id ? (
                     <form
                       onSubmit={handleSubmit((data) => onSubmit(data, task._id))}
@@ -128,7 +128,7 @@ const TaskList = ({ tasks }) => {
                 </div>
 
                 {/* Task Action Buttons */}
-                <div className="flex space-x-2">
+                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-2 lg:space-y-0">
                   <select
                     value={task.status}
                     onChange={(e) => handleStatusChange(task._id, e.target.value)}
@@ -139,7 +139,7 @@ const TaskList = ({ tasks }) => {
                     <option value="completed">Completed</option>
                   </select>
                   {isEditing !== task._id && (
-                    <>
+                    <div className="flex space-x-2">
                       <button
                         onClick={() => handleEdit(task)}
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 lg:py-2 lg:px-4 rounded cursor-pointer text-sm lg:text-base"
@@ -152,7 +152,7 @@ const TaskList = ({ tasks }) => {
                       >
                         Delete
                       </button>
-                    </>
+                    </div>
                   )}
                 </div>
               </li>

@@ -142,13 +142,13 @@ const TaskList = ({ tasks }) => {
                     <>
                       <button
                         onClick={() => handleEdit(task)}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer"
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 lg:py-2 lg:px-4 rounded cursor-pointer text-sm lg:text-base"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => handleDelete(task._id)}
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer"
+                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 lg:py-2 lg:px-4 rounded cursor-pointer text-sm lg:text-base"
                       >
                         Delete
                       </button>
